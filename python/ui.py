@@ -6,6 +6,19 @@ bauds = [ 300,    600,    1200,   2400,   4800   ,
           38400,  57600,  115200                 ]
 
 
+def img(icon='about', label=None):
+    'create button with stock icon'
+    icon = getattr(Gtk, 'STOCK_'+icon.upper())
+    icon = Gtk.Image.new_from_stock(
+        icon, Gtk.IconSize.BUTTON
+    )
+    button = Gtk.Button()
+    button.set_image(icon)
+    if label:
+        button.set_label(label)
+    return button
+
+
 # partial class
 class UI(Gtk.Window):
     def __init__(self):
@@ -43,8 +56,8 @@ class UI(Gtk.Window):
 
     def create_batch(self):
         top = Gtk.HBox(spacing=4)
-        self.button_load = Gtk.Button(label='Load Heightmap')
-        self.button_send = Gtk.Button(label='Send')
+        self.button_load = img('open', ' Load Heightmap')
+        self.button_send = img('media_play', ' Run')
         top.add(self.button_load)
         top.add(self.button_send)
 
@@ -131,7 +144,7 @@ class UI(Gtk.Window):
         self.scan_printers() # not very mvc
         self.select_device.set_active(0)
 
-        self.scan_button = Gtk.Button(label="Scan")
+        self.scan_button = img("refresh")
         self.scan_button.connect("clicked", self.scan_printers)
 
         # mode switch
@@ -145,9 +158,9 @@ class UI(Gtk.Window):
 
         self.button_head = switch = Gtk.Switch()
         self.buttons = (
-            (btn('Clear'),  btn('North'),   switch),
-            (btn('West'),   btn('Reset'),   btn('East')),
-            (btn('Down'),   btn('South'),   btn('Up')),
+            (btn('Clear'),      img('go_up'),       switch),
+            (img('go_back'),    img('undo'),        img('go_forward')),
+            (btn('Down'),       img('go_down'),     btn('Up')),
         )
 
         self.button_head.connect('notify::active', self.toggle_head)
@@ -173,5 +186,5 @@ class UI(Gtk.Window):
 
 # TODO: should probaply remove in production code
 if __name__ == '__main__':
-    import imcomp
-    imcomp.main()
+    import main
+    main.main()

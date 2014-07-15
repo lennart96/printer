@@ -31,7 +31,7 @@ from ui import UI
 #  [ ] Implement Direct Mode (see Window.cmd)
 #  [ ] Remove splitter
 #  [ ] Recheck device detection
-#  [ ] Use icons for control buttons on right side
+#  [x] Use icons for control buttons on right side
 #      and add them next to text on left side
 #  [ ] Decide whether file save/open is useful
 
