@@ -2,3 +2,8 @@ C:\Users\Boss Bas\documents\visual studio 2010\Projects\3D print programma\3D pr
 C:\Users\Boss Bas\documents\visual studio 2010\Projects\3D print programma\3D print programma\bin\Debug\3D print programma.pdb
 C:\Users\Boss Bas\documents\visual studio 2010\Projects\3D print programma\3D print programma\obj\x86\Debug\3D print programma.exe
 C:\Users\Boss Bas\documents\visual studio 2010\Projects\3D print programma\3D print programma\obj\x86\Debug\3D print programma.pdb
+C:\Users\Familie\Documents\printer\3D print programma\3D print programma\bin\Debug\3D print programma.exe
+C:\Users\Familie\Documents\printer\3D print programma\3D print programma\bin\Debug\3D print programma.pdb
+C:\Users\Familie\Documents\printer\3D print programma\3D print programma\obj\x86\Debug\3D print programma.csprojResolveAssemblyReference.cache
+C:\Users\Familie\Documents\printer\3D print programma\3D print programma\obj\x86\Debug\3D print programma.exe
+C:\Users\Familie\Documents\printer\3D print programma\3D print programma\obj\x86\Debug\3D print programma.pdb
