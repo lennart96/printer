@@ -136,6 +136,8 @@ class Window(UI):
         # TODO: find out how this works on non-unix
 
         self.serials.clear()
+
+        # ONLY IN DEBUG:
         self.serials.append(['ttyUSB0'])
 
         try:
