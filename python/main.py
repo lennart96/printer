@@ -38,7 +38,7 @@ from ui import UI
 
 
 
-DIRECT, BATCH, *_ = range(10, 100)  # control modus
+DIRECT, BATCH = 10, 11
 
 (                                   # REFACT: should probably be in separate file
     UP, DOWN,                       # move head up / down
@@ -141,10 +141,16 @@ class Window(UI):
         self.serials.append(['ttyUSB0'])
 
         try:
+            notfound = FileNotFoundError
+        except NameError:
+            # :( windows
+            notfound = WindowsError
+
+        try:
             for dev in os.listdir('/dev'):
                 if dev[:6] in ('ttyUSB', 'ttyACM'):
                     self.serials.append([dev])
-        except FileNotFoundError:
+        except notfound:
             pass
 
 

@@ -22,7 +22,8 @@ def img(icon='about', label=None):
 # partial class
 class UI(Gtk.Window):
     def __init__(self):
-        super().__init__(title="Printer Driver")
+        # :( python 2
+        super(Gtk.Window, self).__init__(title="Printer Driver")
         self.init_ui()
         self.init()
 
