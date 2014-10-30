@@ -6,19 +6,19 @@ Switch::Switch(int pin) {
     _servo.attach(pin);
 }
 
-Switch::on() {
+void Switch::on() {
     _servo.write(180);
 }
 
-Switch::off() {
+void Switch::off() {
     _servo.write(0);
 }
 
-Switch::state() {
+bool Switch::state() {
     return _servo.read() > 90;
 }
 
-Switch::set(bool state) {
+void Switch::set(bool state) {
     if (state)
         on();
     else
