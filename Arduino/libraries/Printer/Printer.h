@@ -17,6 +17,10 @@ public:
     void    moveSouth();
     void    moveEast();
     void    moveWest();
+    void    on();
+    void    off();
+    void    moveUp();
+    void    moveDown();
 private:
     Motor   m_x;
     Motor   m_y1;
