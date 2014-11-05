@@ -25,6 +25,9 @@ public:
     void    moveUp();
     void    moveDown();
 private:
+    int     _steps_x;
+    int     _steps_y;
+    int     _steps_z;
     Motor   m_x;
     Motor   m_y1;
     Motor   m_y2;
