@@ -3,19 +3,19 @@
 
 #include "Arduino.h"
 #include <Motor.h>
-
-enum motor {
-    X, Y1, Y2, Z;
-};
+#include <Switch.h>
 
 class Printer {
 public:
-            Printer(int steps);
-            Printer(int xysteps, int zsteps);
-            Printer(int xsteps, int ysteps, int zsteps);
+            Printer(int xsteps, int ysteps, int zsteps,
+                    const Motor & x,
+                    const Motor & y1,
+                    const Motor & y2,
+                    const Motor & z,
+                    const Switch & m)
+                    : _steps_x(xsteps), _steps_y(ysteps), _steps_z(zsteps),
+                      m_x(x), m_y1(y1), m_y2(y2), m_z(z), m_head(m) {}
     void    reset();
-    void    setMotor(enum motor, int p1, int p2, int p3);
-    void    setSwitch(int p);
     void    moveNorth();
     void    moveSouth();
     void    moveEast();

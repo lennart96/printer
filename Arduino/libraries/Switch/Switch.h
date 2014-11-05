@@ -13,6 +13,6 @@ public:
     void    set(bool state);
 private:
     Servo   _servo;
-}
+};
 
 #endif
