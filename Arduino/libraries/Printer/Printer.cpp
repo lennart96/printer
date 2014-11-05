@@ -3,46 +3,50 @@
 #include <Motor.h>
 #include <Switch.h>
 
-void reset() {
+Printer::Printer(int steps);
+Printer::Printer(int xysteps, int zsteps);
+Printer::Printer(int xsteps, int ysteps, int zsteps);
+
+void Printer::reset() {
     // todo: implement resetting motor, if possible
     off();
 }
 
-void moveNorth() {
+void Printer::moveNorth() {
     m_x.rotateSteps(_steps_x);
 }
 
-void moveSouth() {
+void Printer::moveSouth() {
     m_x.rotateSteps(-_steps_x);
 }
 
-void moveEast() {
+void Printer::moveEast() {
     for (int i = 0; i < _steps_y) {
         m_y1.rotateSteps(1);
         m_y2.rotateSteps(1);
     }
 }
 
-void moveWest() {
+void Printer::moveWest() {
     for (int i = 0; i < _steps_y) {
         m_y1.rotateSteps(-1);
         m_y2.rotateSteps(-1);
     }
 }
 
-void on() {
+void Printer::on() {
     m_head.on();
 }
 
-void off() {
+void Printer::off() {
     m_head.off();
 }
 
-void moveUp() {
+void Printer::moveUp() {
     m_z.rotateSteps(_steps_z);
 }
 
-void moveDown() {
+void Printer::moveDown() {
     m_z.rotateSteps(-_steps_z);
 }
 

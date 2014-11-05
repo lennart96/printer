@@ -10,6 +10,9 @@ enum motor {
 
 class Printer {
 public:
+            Printer(int steps);
+            Printer(int xysteps, int zsteps);
+            Printer(int xsteps, int ysteps, int zsteps);
     void    reset();
     void    setMotor(enum motor, int p1, int p2, int p3);
     void    setSwitch(int p);
