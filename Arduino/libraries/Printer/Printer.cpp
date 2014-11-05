@@ -3,9 +3,20 @@
 #include <Motor.h>
 #include <Switch.h>
 
-Printer::Printer(int steps);
-Printer::Printer(int xysteps, int zsteps);
-Printer::Printer(int xsteps, int ysteps, int zsteps);
+Printer::Printer(int steps) {
+    _steps_x = _steps_y = _steps_z = steps;
+}
+
+Printer::Printer(int xysteps, int zsteps) {
+    _steps_x = _steps_y = xysteps;
+    _steps_x = zsteps;
+}
+
+Printer::Printer(int xsteps, int ysteps, int zsteps) {
+    _steps_x = xsteps;
+    _steps_y = ysteps;
+    _steps_x = xsteps;
+}
 
 void Printer::reset() {
     // todo: implement resetting motor, if possible
