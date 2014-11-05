@@ -62,7 +62,6 @@ int   Motor::currentDegrees() {
 float Motor::currentRadians() {
      return round(currentPart() * TWO_PI );
 }
- 
 
 void  Motor::rotateRevolutions(float part) {
      rotateSteps(round(part * 512));
