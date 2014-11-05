@@ -32,6 +32,9 @@ void Printer::moveSouth() {
 }
 
 void Printer::moveEast() {
+    // note: this will be slow. might be better to modify Motor.{cpp, h}
+    // to allow more control; delay is called twice, while only one call
+    // should be enough
     for (int i = 0; i < _steps_y) {
         m_y1.rotateSteps(1);
         m_y2.rotateSteps(1);
