@@ -1,4 +1,6 @@
-printer
+Printer
 =======
 
-3d printer files
+3D printer code voor pws.
+
+Posix sh en arduino C++.

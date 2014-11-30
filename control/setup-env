@@ -1,0 +1,5 @@
+#!/bin/sh
+
+root=$(git rev-parse --show-toplevel)
+PATH="$root/control:$PATH"
+
