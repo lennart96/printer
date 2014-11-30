@@ -17,25 +17,25 @@ info and a newline.
 
 Small check if printer is on and responding.
 
-    >P
-    <ACK
+    > P
+    < ACK
 
 #### Movement
 
 One of `X`, `Y` of `Z`, followed by a positive or negative number to be parsed
 by `Serial.parseInt()`.
 
-    >X100
-    <OK.
-    >Z-250
-    <OK.
+    > X100
+    < OK.
+    > Z-250
+    < OK.
 
 #### Printer Head
 
 Actual printing starts with `+` and ends with `-`.
 
-    >+
-    <OK.
-    >-
-    <OK.
+    > +
+    < OK.
+    > -
+    < OK.
 
