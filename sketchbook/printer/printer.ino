@@ -21,24 +21,24 @@ void loop() {
             case '\r':
             case '\n':
                 break;
-            case 'P':
-                Serial.write("ACK\n");
+            case 'p':
+                Serial.write("ack\n");
                 break;
-            case 'X':
+            case 'x':
                 cmdMotor(motorX);
                 break;
-            case 'Y':
+            case 'y':
                 cmdMotor(motorY);
                 break;
-            case 'Z':
+            case 'z':
                 cmdMotor(motorZ);
                 break;
             case '+':
             case '-':
-                Serial.write("WRN Not implemented\n");
+                Serial.write("err not implemented\n");
                 break;
             default:
-                Serial.write("ERR Unknown command ");
+                Serial.write("err unknown command ");
                 Serial.write(axis);
                 Serial.write('\n');
         }

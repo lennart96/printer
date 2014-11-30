@@ -6,36 +6,33 @@ it might work there.
 
 ## Printer Communications
 
-The printer listens on serial, receiving a single uppercase letters as
-commands, followed by optional parameters. Newlines are ignored. The printer
-will respond with a 3 uppercase letter status code, followed by optional extra
-info and a newline.
-
-### Implemented commands
+The printer listens on serial, receiving characters as commands, followed by
+optional parameters. Newlines are ignored. The printer will respond with a 3
+letter status code, followed by optional extra info and a newline.
 
 #### Ping
 
 Small check if printer is on and responding.
 
-    > P
-    < ACK
+    > p
+    < ack
 
 #### Movement
 
-One of `X`, `Y` of `Z`, followed by a positive or negative number to be parsed
+One of `x`, `y` of `z`, followed by a positive or negative number to be parsed
 by `Serial.parseInt()`.
 
-    > X100
-    < OK.
-    > Z-250
-    < OK.
+    > x100
+    < ok.
+    > z-250
+    < ok.
 
 #### Printer Head
 
 Actual printing starts with `+` and ends with `-`.
 
     > +
-    < OK.
+    < ok.
     > -
-    < OK.
+    < ok.
 
