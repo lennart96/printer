@@ -11,6 +11,7 @@ void loop() {
     if (Serial.available()) {
         int steps = Serial.parseInt();
         motor.rotateSteps(steps);
-        Serial.write("Done");
+        Serial.write("Done\n");
     }
 }
+
