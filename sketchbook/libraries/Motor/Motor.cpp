@@ -13,6 +13,7 @@ void Motor::rotateSteps(int n) {
     _totalSteps += n;
     if      (n > 0)  for (int i=0; i< n; i++)  stepCw();
     else if (n < 0)  for (int i=0; i<-n; i++)  stepCcw();
+    write(LOW, LOW, LOW, LOW);
 }
 
 void Motor::stepCw() {
