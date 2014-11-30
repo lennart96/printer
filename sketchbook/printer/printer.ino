@@ -1,8 +1,8 @@
 #include <Motor.h>
 
-Motor motorX(8, 9, 10, 11);
-Motor motorY(8, 9, 10, 11);
-Motor motorZ(2, 3, 4, 5);
+Motor motorX(2, 3, 4, 5);
+Motor motorY(6, 7, 8, 9);
+Motor motorZ(12, 12, 12, 12);
 
 void setup() {
     Serial.begin(9600);
