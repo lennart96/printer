@@ -1,4 +1,11 @@
+# vim backup
 *~
+
+# haskell
 *.hi
 *.o
+
+# ino files
+printer/.build/
+printer/lib/.holder
 
