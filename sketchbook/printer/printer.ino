@@ -15,6 +15,17 @@ void setup() {
     while(!Serial);
 }
 
+void setPos(int & pos, Motor & motor) {
+    if (!configured) {
+        errConf();
+        return();
+    }
+    int to = Serial.parseInt();
+    motor.rotateSteps(to - pos);
+    pos = to;
+    succes();
+}
+
 void cmdMotor(int & pos, Motor & motor) {
     int steps = Serial.parseInt();
     pos += steps;
@@ -30,8 +41,12 @@ void writePos(char name, int var) {
         Serial.print(var);
         Serial.write('\n');
     } else {
-        Serial.write("err not configured\n");
+        errConf();
     }
+}
+
+void errConf() {
+     Serial.write("err not configured\n");
 }
 
 void succes() {
@@ -50,7 +65,7 @@ void loop() {
                     motorZ.rotateSteps(-posZ);
                     succes();
                 } else {
-                    Serial.write("err not configured\n");
+                    errConf();
                 }
             case '!': // set config
                 while (!Serial.available());
@@ -62,6 +77,15 @@ void loop() {
                         break;
                     case '!': // unset reference point
                         configured = false;
+                        break;
+                    case 'x':
+                        setPos(posX, motorX);
+                        break;
+                    case 'y':
+                        setPos(posY, motorY);
+                        break;
+                    case 'z':
+                        setPos(posZ, motorZ);
                         break;
                     default:
                         Serial.write("err unknown config\n");
