@@ -18,7 +18,7 @@ void setup() {
 void setPos(int & pos, Motor & motor) {
     if (!configured) {
         errConf();
-        return();
+        return;
     }
     int to = Serial.parseInt();
     motor.rotateSteps(to - pos);
