@@ -19,15 +19,23 @@ void cmdMotor(int & pos, Motor & motor) {
     int steps = Serial.parseInt();
     pos += steps;
     motor.rotateSteps(steps);
-    Serial.write("OK.\n");
+    succes();
 }
 
 void writePos(char name, int var) {
-    Serial.write("set pos.");
-    Serial.write(name);
-    Serial.write(' ');
-    Serial.print(var);
-    Serial.write('\n');
+    if (configured) {
+        Serial.write("set pos.");
+        Serial.write(name);
+        Serial.write(' ');
+        Serial.print(var);
+        Serial.write('\n');
+    } else {
+        Serial.write("err not configured\n");
+    }
+}
+
+void succes() {
+    Serial.write("ok.\n");
 }
 
 void loop() {
@@ -35,22 +43,22 @@ void loop() {
     if (Serial.available()) {
         char axis = Serial.read();
         switch (axis) {
-            case 'r': // reset
+            case 's': // goto start
                 if (configured) {
                     motorX.rotateSteps(-posX);
-                    motorY.rotateSteps(posY);
+                    motorY.rotateSteps(-posY);
                     motorZ.rotateSteps(-posZ);
-                    Serial.write("ok. done\n");
+                    succes();
                 } else {
                     Serial.write("err not configured\n");
                 }
-            case 'c': // config
+            case '!': // set config
                 while (!Serial.available());
                 switch (arg = Serial.read()) {
                     case '0': // set reference point
                         configured = true;
                         posX = posY = posZ = 0;
-                        Serial.write("OK.\n");
+                        succes();
                         break;
                     case '!': // unset reference point
                         configured = false;
@@ -59,7 +67,7 @@ void loop() {
                         Serial.write("err unknown config\n");
                 }
                 break;
-            case 's': // status
+            case '?': // get config/status
                 while (!Serial.available());
                 switch (arg = Serial.read()) {
                     case '0': // check if reference point exists
@@ -78,8 +86,9 @@ void loop() {
                         writePos(arg, posZ);
                         break;
                     default:
-                        Serial.write("err unknown status\n");
+                        Serial.write("err unknown status ");
                         Serial.write(arg);
+                        Serial.write('\n');
                 }
                 break;
             case 'p': // ping
