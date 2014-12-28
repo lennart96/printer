@@ -1,14 +1,15 @@
-import Paths (points)
+module Main(main,path) where
 
-import Debug.Trace
 import Control.Applicative
 import Control.Monad.State
+
+import Paths (points)
 
 type Coord = (Int,Int)
 type Pos = State Coord
 
 dist :: Coord -> Coord -> Int
-dist (x,y) (x',y') = (x-x')^2 + (y-y')^2
+dist (x,y) (x',y') = let two = 2 :: Int in (x-x')^two + (y-y')^two
 
 dists :: Coord -> [Coord] -> Int
 dists _ [] = 10000000

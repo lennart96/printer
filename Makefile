@@ -1,7 +1,7 @@
 all: bin
 	cp control/{output,setup-env} bin
 	gcc -Wall -pedantic -std=c89 -o bin/fromPng path/{fromPng.c,lodepng.c,lodepng.h}
-	ghc -Wall -o bin/path path/Paths.hs
+	ghc -Wall -o bin/path path/{Path.hs,Paths.hs}
 
 bin:
 	mkdir -p bin
