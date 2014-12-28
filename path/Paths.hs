@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 
+module Paths (points) where
+
 -- permature optimization is the root of all evil
 import Control.Applicative
 import Data.Foldable
@@ -20,6 +22,9 @@ unDot (Dot _ x) = x
 
 instance Foldable Matrix where
     f `foldMap` lists = foldMap id $ foldMap unDot <$> unMatrix (fmap f lists)
+
+points :: [[Int]] -> [[[[(Int,Int)]]]]
+points = paths . fromList
 
 newMatrix :: Int-> Int-> a -> Matrix a
 newMatrix w h default' = Matrix $ do
