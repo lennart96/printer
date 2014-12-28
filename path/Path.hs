@@ -16,7 +16,12 @@ type Chord = [(Int,Int)]
 
 
 findPath :: [[Int]] -> [Cmd]
-findPath = execPos . toCmds . OrderLanes.fromList
+findPath = delUp . execPos . toCmds . OrderLanes.fromList
+
+delUp :: [Cmd] -> [Cmd]
+delUp [] = []
+delUp [Up] = []
+delUp (x:xs) = x:delUp xs
 
 toCmds :: [Layer] -> Pos ()
 toCmds layers = forM_ (zip layers $ map dir [0..]) $ \(l,d) -> layer d l >> moveUp
