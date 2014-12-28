@@ -30,7 +30,7 @@ int main(int argc, str * argv) {
             z = 255 - ((img[3*y*w + 3*x+0]
                        +img[3*y*w + 3*x+1]
                        +img[3*y*w + 3*x+2])/3);
-            printf("% 3u", z);
+            printf("%u", z);
         }
         puts("");
     }
