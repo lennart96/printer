@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Paths (points) where
+module Paths (points, dirs ) where
 
 -- permature optimization is the root of all evil
 import Control.Applicative
@@ -36,7 +36,7 @@ fromList list = let
 transpose :: Matrix a -> Matrix a
 transpose = Matrix . List.transpose . unMatrix
 
-data Dir = H | V
+data Dir = H | V deriving Show
 
 dir :: Int -> Dir
 dir = let dirs = H:V:dirs in (dirs!!)
