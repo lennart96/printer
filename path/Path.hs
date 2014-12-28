@@ -1,3 +1,5 @@
+module Path(findPath,Cmd(..)) where
+
 import Control.Applicative
 import Control.Monad.State
 import Control.Monad.Trans.Writer
@@ -10,8 +12,8 @@ data Cmd = N Int | E Int | S Int | W Int | Up | On | Off deriving Show
 type Coord = (Int,Int,Int)
 type Pos = WriterT [Cmd] (State Coord)
 
-fromList :: [[Int]] -> [Cmd]
-fromList = execPos . toCmds . OrderLanes.fromLists
+findPath :: [[Int]] -> [Cmd]
+findPath = execPos . toCmds . OrderLanes.fromLists
 
 toCmds :: [[[[(Int,Int)]]]] -> Pos ()
 toCmds layers = forM_ (zip layers $ map dir [0..]) $ \(l,d) -> layer d l >> moveUp
@@ -23,7 +25,7 @@ lane :: Dir -> [[(Int,Int)]] -> Pos ()
 lane = mapM_ . chord
 
 chord :: Dir -> [(Int,Int)] -> Pos ()
-chord d [] = return ()
+chord _ [] = return ()
 chord d [x] = moveBefore d x >> on >> moveAfter d x >> off
 chord d xs = moveBefore d (head xs) >> on >> moveAfter d (last xs) >> off
 
@@ -32,37 +34,37 @@ realPos (x,y) = (x*2+1,y*2+1)
 
 moveBefore, moveAfter :: Dir -> (Int,Int) -> Pos ()
 moveBefore H pos = do
-    (cx,cy) <- getPos
+    (cx,_) <- getPos
     let (tx,ty) = realPos pos
     if cx < tx
         then goto (tx-1,ty)
         else goto (tx+1,ty)
 
 moveBefore V pos = do
-    (cx,cy) <- getPos
+    (_,cy) <- getPos
     let (tx,ty) = realPos pos
     if cy < ty
         then goto (tx,ty-1)
         else goto (tx,ty+1)
 
 moveAfter H pos = do
-    (cx,cy) <- getPos
+    (cx,_) <- getPos
     let (tx,ty) = realPos pos
     if cx < tx
         then goto (tx+1,ty)
         else goto (tx-1,ty)
 
 moveAfter V pos = do
-    (cx,cy) <- getPos
+    (_,cy) <- getPos
     let (tx,ty) = realPos pos
     if cy < ty
         then goto (tx,ty+1)
         else goto (tx,ty-1)
 
 translate :: (Int -> a) -> (Int -> a) -> Int -> Maybe a
-translate neg pos n | n == 0 = Nothing
-                    | n <  0 = Just $ neg (-n)
+translate neg pos n | n <  0 = Just $ neg (-n)
                     | n >  0 = Just $ pos n
+                    | otherwise = Nothing
 
 goto :: (Int, Int) -> Pos ()
 goto (x,y) = do
