@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Lanes (fromLists, Dir(..), dir) where
+module Lanes (fromList, Dir(..), dir) where
 
 -- permature optimization is the root of all evil
 import Control.Applicative
@@ -8,24 +8,27 @@ import Data.Foldable
 import qualified Data.List as List
 import Prelude hiding (foldr, maximum)
 
-type Position = (Int, Int)
+data Dir = H | V deriving Show
+
+type Position = (Int,Int)
 data Dot a = Dot Position a deriving Functor
 
-data Matrix a = Matrix { unMatrix :: [[Dot a]] } deriving  Functor
-
-unDot :: Dot a -> a
-unDot (Dot _ x) = x
+data Matrix a = Matrix { unMatrix :: [[Dot a]] } deriving Functor
 
 instance Foldable Matrix where
     f `foldMap` lists = foldMap id $ foldMap unDot <$> unMatrix (fmap f lists)
 
- -- lanes from Llist
-fromLists :: [[Int]] -> [[[[(Int,Int)]]]]
-fromLists = paths . fromList
+dir :: Int -> Dir
+dir = let dirs = H:V:dirs in (dirs!!)
 
- -- matrix from List
-fromList :: [[a]] -> Matrix a
-fromList list = let
+unDot :: Dot a -> a
+unDot (Dot _ x) = x
+
+fromList :: [[Int]] -> [[[[Position]]]]
+fromList = paths . makeMatrix
+
+makeMatrix :: [[a]] -> Matrix a
+makeMatrix list = let
         w = length list
         h = length (head list)
     in Matrix $ do
@@ -37,11 +40,6 @@ fromList list = let
 
 transpose :: Matrix a -> Matrix a
 transpose = Matrix . List.transpose . unMatrix
-
-data Dir = H | V deriving Show
-
-dir :: Int -> Dir
-dir = let dirs = H:V:dirs in (dirs!!)
 
 paths :: Matrix Int -> [[[[(Int,Int)]]]]
 paths m = do
