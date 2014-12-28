@@ -1,6 +1,6 @@
 # Printer
 
-Code and specifications for out final school project, building a 3D printer.
+Code and specifications for our final school project, building a 3D printer.
 Written in Posix sh, Arduino C++, c89 and Haskell. Not aiming for Windows compatibility, but
 it might work there.
 
