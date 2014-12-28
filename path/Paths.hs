@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+
 -- permature optimization is the root of all evil
 import Control.Applicative
 import Data.Foldable
@@ -7,9 +8,9 @@ import qualified Data.List as List
 import Prelude hiding (foldr, maximum)
 
 type Position = (Int, Int)
-data Dot a = Dot Position a deriving (Eq, Show, Functor)
+data Dot a = Dot Position a deriving Functor
 
-data Matrix a = Matrix { unMatrix :: [[Dot a]] } deriving (Show, Eq)
+data Matrix a = Matrix { unMatrix :: [[Dot a]] }
 
 instance Functor Matrix where
     f `fmap` x = Matrix $ fmap (fmap (fmap f)) (unMatrix x)
@@ -38,37 +39,40 @@ fromList list = let
     return $ Dot (x,y) (list !! x !! y)
     ]
 
-flipH, flipV, transpose, rotL, rotR :: Matrix a -> Matrix a
-flipH = Matrix . reverse . unMatrix
-flipV = Matrix . fmap reverse . unMatrix
-transpose = Matrix . List.transpose . unMatrix
-rotL = flipH . transpose
-rotR = flipV . transpose
-
 size :: [[a]] -> (Int, Int)
 size [] = (0,0)
 size m = (length m, length (head m))
 
-data Dir = H | V deriving (Show, Eq)
-data Wind = N | S | E| W deriving (Show, Eq)
+transpose :: Matrix a -> Matrix a
+transpose = Matrix . List.transpose . unMatrix
+
+data Dir = H | V
 
 dir :: Int -> Dir
 dir = let dirs = H:V:dirs in (dirs!!)
 
-paths :: Matrix Int -> [[[(Int,Int)]]]
+paths :: Matrix Int -> [[[[(Int,Int)]]]]
 paths m = do
     z <- [0..maximum m - 1]
     return $ layer $ fmap (>z) $ case dir z of
         H -> m
-        V -> rotR m
+        V -> transpose m
 
-layer :: Matrix Bool -> [[(Int,Int)]]
+layer :: Matrix Bool -> [[[(Int,Int)]]]
 layer = fmap lane . unMatrix
 
-lane :: [Dot Bool] -> [(Int,Int)]
-lane [] = []
-lane (Dot pos True:ds) = pos:lane ds
-lane (Dot _ False:ds) = lane ds
+lane :: [Dot Bool] -> [[(Int,Int)]]
+lane = lane' []
+    where
+    lane' :: [(Int,Int)] -> [Dot Bool] -> [[(Int,Int)]]
+    lane' [] [] = []
+    lane' xs [] = [reverse xs]
+    lane' [] (Dot _ False:ds) = lane' [] ds
+    lane' xs (Dot _ False:ds) = reverse xs:lane' [] ds
+    lane' xs (Dot pos True:ds) = lane' (pos:xs) ds
 
 main :: IO ()
-main = undefined
+main = do
+    input <- getContents
+    let arr = (fmap (fmap read . words) . lines) input :: [[Int]]
+    putStrLn $ unlines $ fmap show $ paths $ fromList arr
