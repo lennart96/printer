@@ -1,9 +1,9 @@
-module Main(main,path) where
+module OrderLanes(fromLists) where
 
 import Control.Applicative
 import Control.Monad.State
 
-import Paths (points)
+import qualified Lanes
 
 type Coord = (Int,Int)
 type Pos = State Coord
@@ -64,11 +64,5 @@ simplify [] = []
 simplify ([]:xs) = simplify xs
 simplify (x:xs) = x:simplify xs
 
-path :: [[Int]] -> [[[[Coord]]]]
-path = findPath . points
-
-main :: IO ()
-main = do
-    input <- getContents
-    let arr = (fmap (fmap read . words) . lines) input :: [[Int]]
-    putStrLn $ unlines $ show <$> points arr
+fromLists :: [[Int]] -> [[[[Coord]]]]
+fromLists = findPath . Lanes.fromLists

@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Paths (points, dirs ) where
+module Lanes (fromLists, dir) where
 
 -- permature optimization is the root of all evil
 import Control.Applicative
@@ -19,9 +19,11 @@ unDot (Dot _ x) = x
 instance Foldable Matrix where
     f `foldMap` lists = foldMap id $ foldMap unDot <$> unMatrix (fmap f lists)
 
-points :: [[Int]] -> [[[[(Int,Int)]]]]
-points = paths . fromList
+ -- lanes from Llist
+fromLists :: [[Int]] -> [[[[(Int,Int)]]]]
+fromLists = paths . fromList
 
+ -- matrix from List
 fromList :: [[a]] -> Matrix a
 fromList list = let
         w = length list
