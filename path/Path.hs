@@ -25,6 +25,7 @@ layer xs' = let
         top = head xs
         bot = last xs
         dist' :: Coord -> [[Coord]] -> Int
+        dist' _ [] = dists undefined []
         dist' pos ls = minimum $ fmap (dists pos) ls
     in do
         pos <- get
