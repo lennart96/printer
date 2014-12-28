@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Lanes (fromLists, dir) where
+module Lanes (fromLists, Dir(..), dir) where
 
 -- permature optimization is the root of all evil
 import Control.Applicative
@@ -47,8 +47,8 @@ paths :: Matrix Int -> [[[[(Int,Int)]]]]
 paths m = do
     z <- [0..maximum m - 1]
     return $ layer $ fmap (>z) $ case dir z of
-        H -> m
-        V -> transpose m
+        H -> transpose m
+        V -> m
 
 layer :: Matrix Bool -> [[[(Int,Int)]]]
 layer = fmap lane . unMatrix
