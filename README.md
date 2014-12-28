@@ -1,7 +1,7 @@
 # Printer
 
 Code and specifications for our final school project, building a 3D printer.
-Written in Posix sh, Arduino C++, c89 and Haskell. Not aiming for Windows compatibility, but
+Written in posix shell, Arduino C++, c89 and Haskell. Not aiming for Windows compatibility, but
 it might work there.
 
 ## Printer Communications
@@ -38,7 +38,7 @@ Actual printing starts with `+` and ends with `-`.
 
 #### State
 
-Some small commands to make commanding the printer directly easier. A reference point is implemented to which the printer will returen when commanded to. The reference point is disabled by default.
+Some small commands to make manually commanding the printer easier. A reference point is implemented to which relative movements can be made. The reference point is disabled by default.
 
 Setting state is done using a `!` prefix, getting current state or other information using `?`. The reference point is referred to as `0`, the x, y, and z positions as respectively `x`, `y` and `z`.
 
