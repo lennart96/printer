@@ -1,0 +1,15 @@
+#!/bin/sh
+
+root=$(git rev-parse --show-toplevel)
+
+port=$(cat "$root"/control/port)
+if ! [ -f "$port" ]; then
+    echo "not found: $port"
+    exit 1
+fi
+
+echo "$port < $1"
+tail -n +1 -f "$port" | grep -m 1 | (echo "$port > " && cat) &
+pid=$!
+echo "$1" >> "$port"
+wait $pid

@@ -2,7 +2,7 @@
 
 root=$(git rev-parse --show-toplevel)
 
-port=$(awk '/serial/ {print $3}' "$root"/printer/ino.ino)
+port=$(cat "$root"/control/port)
 if ! [ -f "$port" ]; then
     echo "not found: $port"
     exit 1
