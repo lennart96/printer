@@ -3,7 +3,7 @@
 root=$(git rev-parse --show-toplevel)
 
 port=$(cat "$root"/control/port)
-if ! [ -f "$port" ]; then
+if ! [ -e "$port" ]; then
     echo "not found: $port"
     exit 1
 fi

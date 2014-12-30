@@ -133,6 +133,7 @@ void loop() {
                 break;
             case '\r':
             case '\n':
+            case ' ':
                 break;
             default:
                 Serial.write("err unknown command ");
