@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from threading import Thread
+from time import sleep
 import subprocess as proc
 from gi.repository import Gtk, Pango, Gdk
 
@@ -12,11 +13,13 @@ class Exec(Thread):
 
     def run(self):
         p = proc.Popen(self.cmd, stdout=proc.PIPE, stderr=proc.PIPE)
-        out, err = p.communicate()
-        Gdk.threads_enter()
-        self.print(err.decode("latin1"))
-        self.print(out.decode("latin1"))
-        Gdk.threads_leave()
+        for line in p.stdout:
+            Gdk.threads_enter()
+            self.print(line.decode("latin1"))
+            Gdk.threads_leave()
+            sleep(0.01)
+        self.print(p.stderr.read().decode("latin1"))
+        self.print('done.')
 
 def exec(print, *cmd):
     Exec(cmd, print).start()
@@ -91,12 +94,14 @@ class Window(Gtk.Window):
 
     def print_file(self, path):
         self.print("printing %r" % path)
-        exec(self.print, "sh", "-c", "fromPng %r | path %r %r %r | send-cmd %r -i" % (
+        cmd = ("fromPng %r | path %r %r %r | send-cmd %r -i" % (
             path,
             self.getX(),
             self.getY(),
             self.getZ(),
             self.getPort()))
+        print("exec " + cmd)
+        exec(self.print, "sh", "-c", cmd)
 
     def getX(self):
         return "100"
