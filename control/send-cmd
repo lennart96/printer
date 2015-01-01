@@ -8,8 +8,4 @@ if ! [ -e "$port" ]; then
     exit 1
 fi
 
-echo "$port > $1"
-echo "$1" >> "$port"
-echo -n "$port <"
-sleep 1s
-cat "$port"
+talk "$port" "$@"
