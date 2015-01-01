@@ -1,6 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 module Main(main) where
 
+import System.IO
 import Data.Functor
 import Text.Read (readMaybe)
 import System.Environment (getArgs)
@@ -25,4 +26,4 @@ main = fmap readMaybe <$> getArgs >>= \case
     [Just xyz]                  -> parse xyz xyz xyz
     [Just xy , Just z]          -> parse xy  xy  z
     [Just x  , Just y, Just z]  -> parse x   y   z
-    _                           -> putStrLn "usage: steps-x [[steps-y] steps-z]"
+    _                           -> hPutStrLn stderr "usage: steps-x [[steps-y] steps-z]"
