@@ -6,23 +6,42 @@ import subprocess as proc
 from gi.repository import Gtk, Pango, Gdk
 
 class Exec(Thread):
-    def __init__(self, cmd, print):
+    def __init__(self, cmd, print, port):
         super().__init__()
         self.print = print
         self.cmd = cmd
+        self.port = port
 
     def run(self):
-        p = proc.Popen(self.cmd, stdout=proc.PIPE, stderr=proc.PIPE)
-        for line in p.stdout:
-            Gdk.threads_enter()
-            self.print(line.decode("latin1"))
-            Gdk.threads_leave()
-            sleep(0.01)
+        p = proc.Popen(self.cmd, stdout=proc.PIPE, stderr=proc.PIPE, shell=True)
         self.print(p.stderr.read().decode("latin1"))
+        for line in p.stdout:
+            line = line.decode("latin1").strip()
+            com = proc.Popen(["talk", self.port, line], stdout=proc.PIPE, stderr=proc.PIPE)
+            out, err = com.communicate()
+            out = out.decode('latin1').strip()
+            err = err.decode('latin1').strip()
+            if err:
+                Gdk.threads_enter()
+                self.print(err)
+                Gdk.threads_leave()
+            if out:
+                Gdk.threads_enter()
+                self.print(out)
+                Gdk.threads_leave()
+            if com.returncode:
+                Gdk.threads_enter()
+                self.print("errorcode %d" % com.returncode)
+                Gdk.threads_leave()
+                p.kill()
+                return
+            sleep(1)
+        Gdk.threads_enter()
         self.print('done.')
+        Gdk.threads_leave()
 
-def exec(print, *cmd):
-    Exec(cmd, print).start()
+def exec(print, port, *cmd):
+    Exec(cmd, print, port).start()
 
 class Window(Gtk.Window):
     def __init__(self):
@@ -94,14 +113,13 @@ class Window(Gtk.Window):
 
     def print_file(self, path):
         self.print("printing %r" % path)
-        cmd = ("fromPng %r | path %r %r %r | send-cmd %r -i" % (
+        cmd = ("fromPng %r | path %r %r %r" % (
             path,
             self.getX(),
             self.getY(),
-            self.getZ(),
-            self.getPort()))
+            self.getZ()))
         print("exec " + cmd)
-        exec(self.print, "sh", "-c", cmd)
+        exec(self.print, self.getPort(), cmd)
 
     def getX(self):
         return "100"
