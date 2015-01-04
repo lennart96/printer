@@ -1,4 +1,5 @@
 #include <Motor.h>
+#include <Switch.h>
 
 int posX = 0;
 int posY = 0;
@@ -9,6 +10,7 @@ boolean configured = false;
 Motor motorX(2, 3, 4, 5);
 Motor motorY(6, 7, 8, 9);
 Motor motorZ(10, 11, 12, 13);
+Switch head(14); // change this
 
 void setup() {
     Serial.begin(9600);
@@ -128,8 +130,10 @@ void loop() {
                 cmdMotor(posZ, motorZ);
                 break;
             case '+': // head on
+                head.on();
+                break;
             case '-': // head off
-                Serial.write("err not implemented\n");
+                head.off();
                 break;
             case '\r':
             case '\n':
