@@ -1,0 +1,5 @@
+#!/bin/sh
+
+path=$1
+shift
+fromPng "$path" | path "$@" | send-cmd -i
