@@ -8,16 +8,18 @@ typedef unsigned num;
 typedef unsigned char byte;
 
 int main(int argc, str * argv) {
-    str filename = argv[1];
+    str filename;
     unsigned err, x, y, z, w, h;
     byte * img;
+    num sum, max_height;
 
-    if (argc != 2) {
-        fprintf(stderr, "usage: [filename.png]\n");
+    if (argc < 2) {
+        fprintf(stderr, "usage: filename.png [max-height]\n");
         exit(EXIT_FAILURE);
     }
 
     filename = argv[1];
+    max_height = (argc < 3) ? 255 : atoi(argv[2]); /* security :( */
 
     if ((err = lodepng_decode24_file(&img, &w, &h, filename))) {
         fprintf(stderr, "lodepng: %s\n", lodepng_error_text(err));
@@ -27,9 +29,12 @@ int main(int argc, str * argv) {
     for (y = 0; y < h; y++) {
         for (x = 0; x < w; x++) {
             if (x > 0) printf(" ");
-            z = 255 - ((img[3*y*w + 3*x+0]
-                       +img[3*y*w + 3*x+1]
-                       +img[3*y*w + 3*x+2])/3);
+            sum = img[3*y*w + 3*x+0]
+                + img[3*y*w + 3*x+1]
+                + img[3*y*w + 3*x+2];
+            z = sum * (max_height+1) / (256*3-1);
+            if (z > max_height)
+                z = max_height;
             printf("%u", z);
         }
         puts("");
