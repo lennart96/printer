@@ -1,3 +1,4 @@
+#include <Servo.h>
 #include <Motor.h>
 #include <Switch.h>
 
@@ -10,11 +11,12 @@ boolean configured = false;
 Motor motorX(2, 3, 4, 5);
 Motor motorY(6, 7, 8, 9);
 Motor motorZ(10, 11, 12, 13);
-Switch head(14); // change this
+Servo head;
 
 void setup() {
     Serial.begin(9600);
     while(!Serial);
+    head.attach(A0);
 }
 
 void setPos(int & pos, Motor & motor) {
@@ -130,10 +132,12 @@ void loop() {
                 cmdMotor(posZ, motorZ);
                 break;
             case '+': // head on
-                head.on();
+                head.write(180);
+                Serial.write("ok.\n");
                 break;
             case '-': // head off
-                head.off();
+                head.write(0);
+                Serial.write("ok.\n");
                 break;
             case '\r':
             case '\n':
