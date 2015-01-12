@@ -132,11 +132,15 @@ void loop() {
                 cmdMotor(posZ, motorZ);
                 break;
             case '+': // head on
-                head.write(180);
+                head.write(135);
                 Serial.write("ok.\n");
                 break;
             case '-': // head off
-                head.write(0);
+                head.write(45);
+                Serial.write("ok.\n");
+                break;
+            case 'm': // head degrees
+                head.write(Serial.parseInt());
                 Serial.write("ok.\n");
                 break;
             case '\r':
