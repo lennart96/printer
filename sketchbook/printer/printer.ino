@@ -131,12 +131,15 @@ void loop() {
             case 'z': // move z
                 cmdMotor(posZ, motorZ);
                 break;
+            case '=': // lazy
             case '+': // head on
-                head.write(135);
+                head.write(90);
+                delay(250);
                 Serial.write("ok.\n");
                 break;
             case '-': // head off
-                head.write(45);
+                head.write(130);
+                delay(250);
                 Serial.write("ok.\n");
                 break;
             case 'm': // head degrees
