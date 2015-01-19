@@ -133,12 +133,12 @@ void loop() {
                 break;
             case '=': // lazy
             case '+': // head on
-                head.write(90);
+                head.write(100);
                 delay(250);
                 Serial.write("ok.\n");
                 break;
             case '-': // head off
-                head.write(130);
+                head.write(140);
                 delay(250);
                 Serial.write("ok.\n");
                 break;
