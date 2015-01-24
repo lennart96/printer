@@ -71,6 +71,7 @@ void loop() {
                 } else {
                     errConf();
                 }
+                break;
             case '!': // set config
                 while (!Serial.available());
                 switch (arg = Serial.read()) {
