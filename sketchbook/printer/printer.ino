@@ -134,7 +134,7 @@ void loop() {
                 break;
             case '=': // lazy
             case '+': // head on
-                head.write(100);
+                head.write(88);
                 delay(250);
                 Serial.write("ok.\n");
                 break;

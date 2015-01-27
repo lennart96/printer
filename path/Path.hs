@@ -58,30 +58,17 @@ moveBefore H pos = do
     (cx,_) <- getPos
     let (tx,ty) = realPos pos
     if cx < tx
-        then goto (tx-1,ty)
-        else goto (tx+1,ty)
+        then goto (tx-2,ty)
+        else goto (tx+2,ty)
 
 moveBefore V pos = do
     (_,cy) <- getPos
     let (tx,ty) = realPos pos
     if cy < ty
-        then goto (tx,ty-1)
-        else goto (tx,ty+1)
+        then goto (tx,ty-2)
+        else goto (tx,ty+2)
 
-moveAfter H pos = do
-    (cx,_) <- getPos
-    let (tx,ty) = realPos pos
-    if cx < tx
-        then goto (tx+1,ty)
-        else goto (tx-1,ty)
-
-moveAfter V pos = do
-    (_,cy) <- getPos
-    let (tx,ty) = realPos pos
-    if cy < ty
-        then goto (tx,ty+1)
-        else goto (tx,ty-1)
-
+moveAfter _ pos = goto $ realPos pos
 
 translate :: (Int -> a) -> (Int -> a) -> Int -> Maybe a
 translate neg pos n | n <  0 = Just $ neg (-n)
