@@ -24,7 +24,7 @@ interactive h = do
     forM_ (lines input) $ \msg -> do
         putStrLn $ "> " ++  msg
         hPutStrLn h msg
-        response <- hGetLine h
+        response <- hGetLineNoFail h
         putStrLn $ "< " ++ response
 
 main :: IO ()
