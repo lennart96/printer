@@ -71,6 +71,7 @@ void loop() {
                 } else {
                     errConf();
                 }
+                break;
             case '!': // set config
                 while (!Serial.available());
                 switch (arg = Serial.read()) {
@@ -131,12 +132,15 @@ void loop() {
             case 'z': // move z
                 cmdMotor(posZ, motorZ);
                 break;
+            case '=': // lazy
             case '+': // head on
-                head.write(135);
+                head.write(88);
+                delay(250);
                 Serial.write("ok.\n");
                 break;
             case '-': // head off
-                head.write(45);
+                head.write(140);
+                delay(250);
                 Serial.write("ok.\n");
                 break;
             case 'm': // head degrees

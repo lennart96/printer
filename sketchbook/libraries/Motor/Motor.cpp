@@ -37,29 +37,29 @@ void Motor::write(int m1, int m2, int m3, int m4) {
     digitalWrite(_p2, m2);
     digitalWrite(_p3, m3);
     digitalWrite(_p4, m4);
-    delay(1);
+    delayMicroseconds(1000);
 }
 
 int   Motor::totalSteps() {
      return _totalSteps;
 }
- 
+
 int   Motor::currentSteps() {
      return totalSteps() % 512;
 }
- 
+
 float Motor::totalRevolutions() {
      return totalSteps() / 512.0;
 }
- 
+
 float Motor::currentPart() {
      return currentSteps() / 512.0;
 }
- 
+
 int   Motor::currentDegrees() {
      return round(currentPart() * 360.0);
 }
- 
+
 float Motor::currentRadians() {
      return round(currentPart() * TWO_PI );
 }
@@ -67,11 +67,11 @@ float Motor::currentRadians() {
 void  Motor::rotateRevolutions(float part) {
      rotateSteps(round(part * 512));
 }
- 
+
 void  Motor::rotateRadians(float radians) {
      rotateRevolutions(radians / TWO_PI);
 }
- 
+
 void  Motor::rotateDegrees(int degrees) {
      rotateRevolutions(degrees / 360.0);
 }

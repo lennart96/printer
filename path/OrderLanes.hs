@@ -39,7 +39,7 @@ layer xs' = let
         dist' pos ls = minimum $ fmap (dists pos) ls
     in do
         pos <- get
-        if dist' pos top <= dist' pos bot
+        if dist' pos top > dist' pos bot
             then mapM lane xs
             else mapM lane (reverse xs)
 

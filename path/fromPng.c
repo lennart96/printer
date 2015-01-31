@@ -35,7 +35,7 @@ int main(int argc, str * argv) {
             z = sum * (max_height+1) / (256*3-1);
             if (z > max_height)
                 z = max_height;
-            printf("%u", z);
+            printf("%2u", max_height-z);
         }
         puts("");
     }
