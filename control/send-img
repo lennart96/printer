@@ -2,4 +2,6 @@
 
 path=$1
 shift
-fromPng "$path" | path "$@" | send-cmd -i
+height=$1
+shift
+fromPng "$path" "$height" | path "$@" | send-cmd -i
